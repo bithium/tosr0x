@@ -27,3 +27,8 @@ TODO: Write usage instructions here
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/bithium/tosr0x.
+
+## License
+
+MIT (see [LICENSE](./file.LICENSE.html))
+
