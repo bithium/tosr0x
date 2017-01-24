@@ -20,9 +20,50 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Please the following code for an example on using this gem.
+
+```ruby
+require 'tosr0x'
+
+RELAY_PORT  = '/dev/ttyUSB0' # Change this to the serial port that belongs to the relay.
+RELAY_COUNT = 8              # Change this to indicate the number of relays in the board.
+
+board = TOSR0x::Board.new(RELAY_PORT, RELAY_COUNT)
+
+# Enable all relays
+
+board.enable(:all)   # or
+board.enable(0)      # or
+board.disable(:none)
+
+# Disable all relays
+
+board.disable(:all)   # or
+board.disable(0)      # or
+board.enable(:none)
+
+# We can also enable individual relays
+relay = board.get(1)
+
+relay.enable     # or
+board.enable(1)
+
+# ... disable individual relays
+relay.disable     # or
+board.disable(1)
+
+# ... and even toggle them
+relay.toggle     # or
+board.toggle(1)
+```
+
+For more options please see the documentation generate by [YARD](http://yardoc.org/).
 
 ## Development
+
+Use the normal flow when using [Bundler](http://bundler.io/) and [RSpec](http://rspec.info/).
+
+Also the guidelines from [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/)
 
 ## Contributing
 
