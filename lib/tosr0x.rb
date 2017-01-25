@@ -75,7 +75,6 @@ module TOSR0x
     #   - _:none_ - disable all relays.
     def enable(index)
       return disable(:all) if index == :none
-      index = 0 if index == :all
       index = check_index(index)
       relay = @relays[index]
       relay.enable
@@ -99,7 +98,6 @@ module TOSR0x
     #   - _:none_ - enable all relays.
     def disable(index)
       return enable(:all) if index == :none
-      index = 0 if index == :all
       index = check_index(index)
       relay = @relays[index]
       relay.disable
@@ -136,9 +134,11 @@ module TOSR0x
     #
     # @param index [Integer] the index to check it is between [0, size]
     def check_index(index)
+      index = 0 if index == :all
       index = index.to_i
       raise "Invalid index #{index}, valid values [1 - #{size}]" \
         if index.is_a?(Integer) && index > size
+      index
     end
 
   end
