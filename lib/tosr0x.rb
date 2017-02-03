@@ -37,8 +37,7 @@ module TOSR0x
     #
     # @return [String] two bytes version information.
     def version
-      @port.write(COMMANDS[:version])
-      @port.read(2)
+      cmd(COMMANDS[:version], 2)
     end
 
     # Retrieve the state for the given relay.
@@ -49,8 +48,7 @@ module TOSR0x
     # @return [Array<Integer>] with the states for all the relays.
     def state(index = :all)
       index = check_index(index)
-      @port.write(COMMANDS[:state])
-      res = @port.read(1).ord
+      res = cmd(COMMANDS[:state]).ord
       res = (0...size).to_a.map { |pos| (res & (0x01 << pos)) >> pos }
       res = res[index - 1] if index && index.nonzero?
       res
@@ -125,6 +123,15 @@ module TOSR0x
         relay.toggle
       else
         @relays[1..-1].map(&:toggle)
+      end
+    end
+
+    protected
+
+    def cmd(out, count = 1)
+      Timeout.timeout(1) do
+        @port.write(out)
+        @port.read(count)
       end
     end
 

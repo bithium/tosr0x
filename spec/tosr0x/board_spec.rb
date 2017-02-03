@@ -2,7 +2,11 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 describe TOSR0x::Board do
-  let(:board) { described_class.new(RELAY_PORT, RELAY_COUNT) }
+  let!(:board) { described_class.new(RELAY_PORT, RELAY_COUNT) }
+
+  before(:all) do
+    sleep(2) # Wait for board to be ready
+  end
 
   describe '#version' do
     it 'reads the board version' do
